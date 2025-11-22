@@ -15,4 +15,7 @@ export class PlaywrightHome {
   async expectTitleContains(text: string) {
     await expect(this.page).toHaveTitle(new RegExp(text));
   }
+  async expectTitleIsExact(text: string) {
+    await expect(this.page).toHaveTitle(text);
+  }
 }

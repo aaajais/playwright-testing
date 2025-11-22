@@ -8,3 +8,4 @@ test('Playwright homepage has Playwright in title (POM)', async ({ page }) => {
   // Verify the title contains "Playwright test"
   await home.expectTitleContains('Playwright');
 });
+

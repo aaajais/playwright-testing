@@ -1,7 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
+import { PlaywrightHome } from './pages/playwrightHome.page';
 
-test('Playwright homepage has Playwright in title', async ({ page }) => {
-  // Navigate to Playwright site and verify title
-  await page.goto('https://playwright.dev');
-  await expect(page).toHaveTitle(/Playwright/);
+test('Playwright homepage has Playwright in title (POM)', async ({ page }) => {
+  const home = new PlaywrightHome(page);
+  await home.goto();
+  await home.expectTitleContains('Playwright');
 });

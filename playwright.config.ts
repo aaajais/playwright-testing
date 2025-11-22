@@ -9,6 +9,7 @@ const config: PlaywrightTestConfig = {
   use: {
     headless: true,
   },
+  reporter: [['html', { open: 'never' }]],
 };
 
 export default config;

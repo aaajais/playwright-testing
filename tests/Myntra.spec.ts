@@ -23,10 +23,30 @@ test('Search Bag on Myntra using POM', async ({ page }) => {
 	await home.verifyResults();
 });
 
-//click on Man tab on Myntra
+
+//click on Every tab on Myntra
 test('Click	 on Man	tab on Myntra', async ({ page }) => {
-	const home = new MyntraHome(page);	
+	const home = new MyntraHome(page);
 	// Open Myntra
 	await home.goto();
-	await home.clickOnManTab();
+	await home.getAllMenItems();
+    //wait for some time
+	await page.waitForTimeout(5000);
 });
+
+//click on Womem tab on Myntra
+test('click on women tab on Myntra', async ({ page })=>{
+	const home = new MyntraHome(page);
+	// Open Myntra
+	await home.goto();
+	await home.clickOnWomenTab();
+});
+
+//click on Kids tab on Myntra
+test('click on kids tab on Myntra', async ({ page })=>{
+	const home = new MyntraHome(page);
+	// Open Myntra
+	await home.goto();
+	await home.clikcOnKidstab();
+});
+

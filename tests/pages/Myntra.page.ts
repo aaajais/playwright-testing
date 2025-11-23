@@ -7,7 +7,7 @@ export class MyntraHome {
   constructor(page: Page) {
     this.page = page;
   }
-
+// Navigate to Myntra homepage
   async goto() {
     try {
       await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 30000 });

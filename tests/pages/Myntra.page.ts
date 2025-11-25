@@ -7,7 +7,7 @@ export class MyntraHome {
   constructor(page: Page) {
     this.page = page;
   }
-// Navigate to Myntra homepage
+  // Navigate to Myntra homepage
   async goto() {
     try {
       await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -55,13 +55,29 @@ export class MyntraHome {
   //click on Women tab on Myntra
   async clickOnWomenTab() {
     const WomenTab = this.page.locator('a[data-group="women"]');
-    await WomenTab.click();
+    await WomenTab.hover();
+
+    const items = this.page.locator('.desktop-pane a');
+
+    const count = await items.count();
+    console.log("Total items:", count);
+    for (let i = 0; i < count; i++) {
+      console.log(await items.nth(i).innerText());
+    }
   };
 
   //click on Kids tab on Myntra
   async clikcOnKidstab() {
     const KidsTab = this.page.locator('a[data-group="kids"]');
-    await KidsTab.click();
+    await KidsTab.hover();
+    const items = this.page.locator('.desktop-pane a');
+
+    const count = await items.count();
+    console.log("Total items:", count);
+
+    for (let i = 0; i < count; i++) {
+      console.log(await items.nth(i).innerText());
+    }
 
   }
 

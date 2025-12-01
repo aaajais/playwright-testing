@@ -30,12 +30,12 @@ test('Click	 on Man	tab on Myntra', async ({ page }) => {
 	// Open Myntra
 	await home.goto();
 	await home.getAllMenItems();
-    //wait for some time
+	//wait for some time
 	await page.waitForTimeout(5000);
 });
 
 //click on Womem tab on Myntra
-test('click on women tab on Myntra', async ({ page })=>{
+test('click on women tab on Myntra', async ({ page }) => {
 	const home = new MyntraHome(page);
 	// Open Myntra
 	await home.goto();
@@ -43,10 +43,46 @@ test('click on women tab on Myntra', async ({ page })=>{
 });
 
 //click on Kids tab on Myntra
-test('click on kids tab on Myntra', async ({ page })=>{
+test('click on kids tab on Myntra', async ({ page }) => {
 	const home = new MyntraHome(page);
 	// Open Myntra
 	await home.goto();
 	await home.clikcOnKidstab();
+});
+
+//click on man t-shirts tab on Myntra
+test('click on man t-shirts tab on Myntra', async ({ page }) => {
+	const home = new MyntraHome(page);
+	// Open Myntra
+	await home.goto();
+	await page.waitForTimeout(5000);
+	await home.clickOnManTshirtTab();
+});
+
+//click on recommended tab and select low to high on Myntra
+test('click on recommended tab and select low to high on Myntra', async ({ page }) => {
+	const home = new MyntraHome(page);
+	//open myntra
+	await home.goto();
+	await page.waitForTimeout(5000);
+	await home.clickOnManTshirtTab();
+	await page.waitForTimeout(5000);
+	await home.selectPriceLowToHigh();
+	await page.waitForTimeout(5000);
+
+});
+
+//select loesst price product
+test('select lowest price product', async ({ page }) => {
+	const home = new MyntraHome(page);
+	//open myntra
+	await home.goto();
+	await page.waitForTimeout(5000);
+	await home.clickOnManTshirtTab();
+	await page.waitForTimeout(5000);
+	await home.selectPriceLowToHigh();
+	await page.waitForTimeout(5000);
+	await home.selectMostDiscounted();
+	await page.waitForTimeout(5000);
 });
 

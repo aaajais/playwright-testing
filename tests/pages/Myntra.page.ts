@@ -82,5 +82,44 @@ export class MyntraHome {
   }
 
 
+  // click on men → t-shirts tab under myntra
+  async clickOnManTshirtTab() {
+    // Hover on MEN tab
+    const menTab = this.page.locator('a[data-group="men"]');
+    await menTab.hover();
+    // Wait for submenu to appear
+    await this.page.waitForSelector('a[href="/men-tshirts"], a[href="/men/tshirts"]', {
+      state: 'visible'
+    });
+    // sometimes Myntra uses this path: /men-tshirts. 
+    // fallback to both locators
+    const tshirtTab = this.page.locator('a[href="/men-tshirts"], a[href="/men/tshirts"]');
+    // Click T-Shirts
+    await tshirtTab.click();
+  }
+
+  //click recommended tab on Myntra and select low to high
+  async selectPriceLowToHigh() {
+    await this.page.locator('.sort-sortBy').click();
+    await this.page.locator('li', { hasText: 'Price: Low to High' }).click();
+  }
+
+
+  //if lower to high is selected select most discounted
+  async selectMostDiscounted() {
+    const recommendedTab = this.page.locator('div.sort-sortBy');
+    await recommendedTab.click();
+    // const mostDiscountedOption = this.page.locator('label[for="discount_desc"]');
+    // await mostDiscountedOption.click();
+    // Select the first product from the sorted list
+    const firstProduct = this.page.locator('li.product-base').first();
+    await firstProduct.click();
+  }
+
+
+
+
+
+
 
 }

@@ -67,7 +67,7 @@ export class MyntraHome {
   };
 
   //click on Kids tab on Myntra
-  async clikcOnKidstab() {
+  async clickOnKidstab() {
     const KidsTab = this.page.locator('a[data-group="kids"]');
     await KidsTab.hover();
     const items = this.page.locator('.desktop-pane a');
@@ -115,6 +115,36 @@ export class MyntraHome {
     const firstProduct = this.page.locator('li.product-base').first();
     await firstProduct.click();
   }
+
+  //add to product cart first check pin code availability
+  async checkPincodeAndAddToCart(pincode: string) {
+    // Correct input field
+    const pincodeInput = this.page.locator('input[placeholder="Enter pincode"]');
+
+    // Wait for pincode input
+    await pincodeInput.waitFor({ state: 'visible', timeout: 10000 });
+
+    // Fill pincode
+    await pincodeInput.fill(pincode);
+
+    // Click "Check"
+    const checkButton = this.page.locator('button:has-text("Check")');
+    await checkButton.click();
+
+    // Wait for availability message (Available / Delivery by...)
+    const availabilityMessage = this.page.locator("div:has-text('Available')");
+    await availabilityMessage.waitFor({ state: 'visible', timeout: 15000 });
+
+    // Click "Add to Bag"
+    const addToBagButton = this.page.locator("button:has-text('Add to Bag')");
+    await addToBagButton.click();
+  }
+
+  
+  
+
+
+
 
 
 

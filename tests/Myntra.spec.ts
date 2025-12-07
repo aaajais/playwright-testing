@@ -47,7 +47,7 @@ test('click on kids tab on Myntra', async ({ page }) => {
 	const home = new MyntraHome(page);
 	// Open Myntra
 	await home.goto();
-	await home.clikcOnKidstab();
+	await home.clickOnKidstab();
 });
 
 //click on man t-shirts tab on Myntra
@@ -85,4 +85,22 @@ test('select lowest price product', async ({ page }) => {
 	await home.selectMostDiscounted();
 	await page.waitForTimeout(5000);
 });
+
+//add to product to bag
+test('add to product to bag', async ({ page }) => {
+	const home = new MyntraHome(page);	
+	//open myntra
+	await home.goto();
+	await page.waitForTimeout(5000);	
+	await home.clickOnManTshirtTab();
+	await page.waitForTimeout(5000);
+	await home.selectPriceLowToHigh();
+	await page.waitForTimeout(5000);
+	await home.selectMostDiscounted();
+	await page.waitForTimeout(5000);
+	await home.checkPincodeAndAddToCart('123456');
+	await page.waitForTimeout(5000);
+});
+
+
 

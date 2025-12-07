@@ -98,7 +98,9 @@ test('add to product to bag', async ({ page }) => {
 	await page.waitForTimeout(5000);
 	await home.selectMostDiscounted();
 	await page.waitForTimeout(5000);
-	//await home.checkPincodeAndAddToCart('123456');
-	//await page.waitForTimeout(5000);
+	await home.checkPincodeAndAddToCart('123456');
+	await page.waitForTimeout(5000);
 });
+
+
 

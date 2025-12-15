@@ -6,7 +6,7 @@ export class LoginPage {
     constructor(page: Page) {
         this.page = page;
     }
-    //Navigate to the Login Paage
+    //Navigate to the Login Page
     async goto() {
         try {
             await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -32,21 +32,41 @@ export class LoginPage {
         // await loginButton.click();
     }
 
-    //login with valid credentials
-    async loginWithValidCredentials(mobileInput: string, otp: string) {
-        const mobileInputField = this.page.locator('input[type="tel"]');
-        await mobileInputField.fill(mobileInput);
-        await this.page.waitForTimeout(2000);
-        //click on check box
-        await this.page.locator('input[type="checkbox"]').check()
-        const loginButton = this.page.locator('.submitBottomOption')
-        //enter otp
-        const otpInputField = this.page.locator('input[type="number"]');
-        await otpInputField.fill(otp);
-        //verify test header
-        await expect(this.page.locator('text=By continuing, I agree')).toBeVisible();
+    // Login with valid mobile number + OTP
+    async loginWithValidCredentials(mobileNumber: string, otp: string) {
 
+        // 1. Mobile number input
+        const mobileInput = this.page.locator('input[type="tel"]');
+        await mobileInput.fill(mobileNumber);
 
-        // await loginButton.click();
+        // 2. Verify T&C text
+        await expect(
+            this.page.locator('text=By continuing, I agree')
+        ).toBeVisible();
+
+        // 3. Accept checkbox
+        await this.page.locator('input[type="checkbox"]').check();
+
+        // 4. Click Continue / Send OTP
+        const continueBtn = this.page.locator('.submitBottomOption');
+        await expect(continueBtn).toBeEnabled();
+        await continueBtn.click();
+
+        // 5. Wait for OTP container
+        const otpContainer = this.page.locator('.otpContainer');
+        await expect(otpContainer).toBeVisible();
+
+        // 6. Enter OTP (multiple inputs)
+        const otpDigits = otp.split('');
+        const otpInputs = this.page.locator('.otpContainer input');
+
+        for (let i = 0; i < otpDigits.length; i++) {
+            await otpInputs.nth(i).fill(otpDigits[i]);
+        }
+
+        // 7. Verify OTP
+        const verifyBtn = this.page.locator('.submitBottomOption');
+        await verifyBtn.click();
     }
+
 }

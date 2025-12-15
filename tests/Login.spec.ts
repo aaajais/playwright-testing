@@ -15,13 +15,16 @@ test('Login with invalid credentials on Myntra using POM', async ({ page }) => {
 
 });
 
-//test with valid credentials
-test('Login with valid credentoials on myntra using POM', async ({ page }) => {
+test('Login with valid credentials on Myntra using POM', async ({ page }) => {
+
     const home = new MyntraHome(page);
-    //open myntra
     await home.goto();
+
     const login = new LoginPage(page);
     await login.goto();
-    await login.loginWithValidCredentials('8521207529', '123456');
-    await page.waitForTimeout(5000);
+
+    await login.loginWithValidCredentials(
+        '8521207529',
+        '123456'
+    );
 });

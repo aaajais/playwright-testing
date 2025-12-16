@@ -140,6 +140,35 @@ export class MyntraHome {
     await addToBagButton.click();
   }
 
+  // Verify footer text is present on the page. Accepts a string or RegExp.
+  async verifyFooterText(expected: string | RegExp) {
+    const footer = this.page.locator('footer');
+    await expect(footer).toContainText(expected, { timeout: 10_000 });
+  }
+
+  // Scroll the page down to the footer so it's visible
+  async scrollToFooter() {
+    const footer = this.page.locator('footer');
+    await footer.scrollIntoViewIfNeeded();
+    await footer.waitFor({ state: 'visible', timeout: 10_000 });
+  }
+
+  // Verify multiple expected substrings are present in the footer
+  async verifyFooterContainsAll(expectedParts: string[]) {
+    const footer = this.page.locator('footer');
+    // Ensure footer is visible
+    await footer.scrollIntoViewIfNeeded();
+    await footer.waitFor({ state: 'visible', timeout: 10_000 });
+    const text = (await footer.innerText()) || '';
+    const normalized = text.replace(/\s+/g, ' ').trim();
+    for (const part of expectedParts) {
+      const normPart = part.replace(/\s+/g, ' ').trim();
+      if (!normalized.includes(normPart)) {
+        throw new Error(`Footer is missing expected text: "${part}"`);
+      }
+    }
+  }
+
   
   
 

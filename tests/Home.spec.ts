@@ -16,3 +16,23 @@ test('Login with invalid credentials on Myntra using POM', async ({ page }) => {
     // await login.loginWithInvalidCredentials('    
 })
 
+///Test to verify footer text on Myntra homepage
+test('Verify footer text on Myntra homepage using POM', async ({ page }) => {
+    const home = new MyntraHome(page);
+    // Open Myntra
+    await home.goto();
+        await page.waitForTimeout(5000);
+        // Scroll to footer and verify multiple expected footer strings
+        await home.scrollToFooter();
+        await home.verifyFooterContainsAll([
+            'Contact Us',
+            'Track Orders',
+            'Privacy policy',
+            'Myntra Insider',
+            'All rights reserved',
+        ]);
+})
+    // const login = new LoginPage(page);
+    // await login.goto();
+    // await login.loginWithInvalidCredentials('
+

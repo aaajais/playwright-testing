@@ -34,8 +34,12 @@ export class MyntraHome {
         }
     }
 
-    //verify under man tab all items
-    
+    //verify fotter text
+    async verifyFooterText(expectedText: string) {
+        const footer = this.page.locator('footer');
+        await expect(footer).toContainText(expectedText);
+    }
+
    
 
 }

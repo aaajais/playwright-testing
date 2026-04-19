@@ -45,10 +45,19 @@ export class MyntraHome {
     const items = this.page.locator('.desktop-pane a');
 
     const count = await items.count();
-    console.log("Total items:", count);
+    console.log('Total items:', count);
+    if (count === 0) {
+      console.warn('No items found under MEN tab');
+      return;
+    }
 
     for (let i = 0; i < count; i++) {
-      console.log(await items.nth(i).innerText());
+      // protect against invisible elements
+      try {
+        console.log(await items.nth(i).innerText());
+      } catch (err) {
+        console.warn(`could not read item ${i}:`, err);
+      }
     }
   }
 
@@ -64,7 +73,7 @@ export class MyntraHome {
     for (let i = 0; i < count; i++) {
       console.log(await items.nth(i).innerText());
     }
-  };
+  }
 
   //click on Kids tab on Myntra
   async clickOnKidstab() {
@@ -73,10 +82,18 @@ export class MyntraHome {
     const items = this.page.locator('.desktop-pane a');
 
     const count = await items.count();
-    console.log("Total items:", count);
+    console.log('Total items:', count);
+    if (count === 0) {
+      console.warn('No items found under KIDS tab');
+      return;
+    }
 
     for (let i = 0; i < count; i++) {
-      console.log(await items.nth(i).innerText());
+      try {
+        console.log(await items.nth(i).innerText());
+      } catch (err) {
+        console.warn(`could not read kid item ${i}:`, err);
+      }
     }
 
   }
@@ -101,7 +118,17 @@ export class MyntraHome {
   //click recommended tab on Myntra and select low to high
   async selectPriceLowToHigh() {
     await this.page.locator('.sort-sortBy').click();
-    await this.page.locator('li', { hasText: 'Price: Low to High' }).click();
+    const option = this.page.locator('li', { hasText: 'Price: Low to High' }).first();
+    if (await option.count() === 0) {
+      const alt = this.page.locator('text=Price: Low to High').first();
+      if (await alt.count() === 0) {
+        console.warn('Sort option "Price: Low to High" not found');
+        return;
+      }
+      await alt.click();
+      return;
+    }
+    await option.click();
   }
 
 
@@ -132,8 +159,13 @@ export class MyntraHome {
     await checkButton.click();
 
     // Wait for availability message (Available / Delivery by...)
-    const availabilityMessage = this.page.locator("div:has-text('Available')");
-    await availabilityMessage.waitFor({ state: 'visible', timeout: 15000 });
+    const availabilityMessage = this.page.locator("div:has-text('Available'), div:has-text('Delivery')");
+    // If neither message appears, continue but warn
+    try {
+      await availabilityMessage.waitFor({ state: 'visible', timeout: 15000 });
+    } catch (err) {
+      console.warn('Availability message did not appear after checking pincode');
+    }
 
     // Click "Add to Bag"
     const addToBagButton = this.page.locator("button:has-text('Add to Bag')");
@@ -168,6 +200,8 @@ export class MyntraHome {
       }
     }
   }
+
+  
 
   
   

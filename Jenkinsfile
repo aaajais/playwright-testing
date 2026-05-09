@@ -1,46 +1,57 @@
 pipeline {
-  agent {
-    docker {
-      image 'mcr.microsoft.com/playwright:latest'
-      args '-u root:root'
-    }
-  }
-
+  agent none
   environment {
     CI = 'true'
   }
-
   stages {
     stage('Checkout') {
+      agent any
       steps {
         checkout scm
       }
     }
-
     stage('Install dependencies') {
+      agent {
+        docker {
+          image 'mcr.microsoft.com/playwright:latest'
+          args '-u root:root'
+        }
+      }
       steps {
         sh 'npm ci'
       }
     }
-
     stage('Install Playwright browsers') {
+      agent {
+        docker {
+          image 'mcr.microsoft.com/playwright:latest'
+          args '-u root:root'
+        }
+      }
       steps {
         sh 'npx playwright install --with-deps'
       }
     }
-
     stage('Run tests') {
+      agent {
+        docker {
+          image 'mcr.microsoft.com/playwright:latest'
+          args '-u root:root'
+        }
+      }
       steps {
-        // run Playwright tests and output junit xml for Jenkins
         sh 'npx playwright test --reporter=dot --reporter=junit'
       }
     }
   }
-
   post {
     always {
-      junit 'test-results/*.xml'
-      archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
+      node('built-in') {
+        junit testResults: 'test-results/*.xml', allowEmptyResults: true
+        archiveArtifacts artifacts: 'playwright-report/**', 
+          fingerprint: true, 
+          allowEmptyArchive: true
+      }
     }
   }
 }

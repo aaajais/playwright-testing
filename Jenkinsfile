@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        CI = 'true'
-        PLAYWRIGHT_JUNIT_OUTPUT_NAME = 'results.xml'
+        CI='true'
+        PLAYWRIGHT_JUNIT_OUTPUT_NAME='results.xml'
     }
 
     stages {
@@ -11,14 +11,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-            }
-        }
-
-        stage('Debug') {
-            steps {
-                bat 'docker --version'
-                bat 'docker ps'
-                bat 'echo %WORKSPACE%'
             }
         }
 
@@ -32,7 +24,7 @@ pipeline {
                 -e CI=true ^
                 -e PLAYWRIGHT_JUNIT_OUTPUT_NAME=results.xml ^
                 mcr.microsoft.com/playwright:latest ^
-                /bin/bash -c "npm install && npx playwright test --reporter=dot,junit"
+                /bin/bash -c "npm install --no-package-lock && npx playwright test --reporter=dot,junit"
                 '''
             }
         }

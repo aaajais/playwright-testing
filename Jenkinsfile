@@ -1,46 +1,60 @@
 pipeline {
-  agent {
-    docker {
-      image 'mcr.microsoft.com/playwright:latest'
-      args '-u root:root'
-    }
-  }
+    agent any
 
-  environment {
-    CI = 'true'
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    environment {
+        CI = 'true'
     }
 
-    stage('Install dependencies') {
-      steps {
-        sh 'npm ci'
-      }
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Debug') {
+            steps {
+                bat 'docker --version'
+                bat 'docker ps'
+                bat 'dir'
+            }
+        }
+
+        stage('Run Playwright in Docker') {
+            steps {
+                script {
+                    docker.image('mcr.microsoft.com/playwright:latest').inside(
+                        '-u root --entrypoint=""'
+                    ) {
+
+                        sh '''
+                            echo "Inside container"
+                            pwd
+                            node -v
+                            npm -v
+
+                            npm ci
+
+                            npx playwright install --with-deps
+
+                            npx playwright test --reporter=junit,dot
+                        '''
+                    }
+                }
+            }
+        }
     }
 
-    stage('Install Playwright browsers') {
-      steps {
-        sh 'npx playwright install --with-deps'
-      }
-    }
+    post {
+        always {
+            junit allowEmptyResults: true,
+                   testResults: '**/*.xml'
 
-    stage('Run tests') {
-      steps {
-        // run Playwright tests and output junit xml for Jenkins
-        sh 'npx playwright test --reporter=dot --reporter=junit'
-      }
+            archiveArtifacts(
+                artifacts: 'playwright-report/**',
+                allowEmptyArchive: true
+            )
+        }
     }
-  }
-
-  post {
-    always {
-      junit 'test-results/*.xml'
-      archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
-    }
-  }
 }

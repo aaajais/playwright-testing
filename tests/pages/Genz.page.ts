@@ -7,8 +7,8 @@ export class GenzPage {
       this.page = page;
    }
 
-   // Click on Gen Z link
+   // Click on Gen Z link in the desktop header
    async clickOnGenzLink() {
-      await this.page.locator('a:has-text("GENZ")').click();
+      await this.page.locator('#desktop-header-cnt').getByRole('link', { name: 'Genz' }).click();
    }
 }

@@ -1,6 +1,14 @@
 import { test } from '@playwright/test';
 test.use({ headless: false });
 import { MyntraHome } from './pages/Myntra.page';
+import * as XLSX from 'xlsx';
+
+// Function to read Excel file
+function readExcelFile(filePath: string, sheetName?: string) {
+    const workbook = XLSX.readFile(filePath);
+    const sheet = sheetName ? workbook.Sheets[sheetName] : workbook.Sheets[workbook.SheetNames[0]];
+    return XLSX.utils.sheet_to_json(sheet);
+}
 
 // Test to search for Bag and Phone on Myntra
 test('Search Bag on Myntra using POM', async ({ page }) => {
@@ -48,6 +56,17 @@ test('click on kids tab on Myntra', async ({ page }) => {
 	// Open Myntra
 	await home.goto();
 	await home.clickOnKidstab();
+});
+
+// Example test to read data from Excel file
+test('Read data from Excel file', async ({ page }) => {
+    // Assuming you have an Excel file named 'testdata.xlsx' in the root directory
+    const data = readExcelFile('./testdata.xlsx');
+    console.log('Excel data:', data);
+    // You can use the data in your tests
+    // For example, if the Excel has search terms:
+    // const searchTerms = data.map(row => row.searchTerm);
+    // Then loop through them
 });
 
 //click on man t-shirts tab on Myntra
@@ -101,6 +120,8 @@ test('add to product to bag', async ({ page }) => {
 	await home.checkPincodeAndAddToCart('123456');
 	await page.waitForTimeout(5000);
 });
+
+//read excel file//
 
 
 

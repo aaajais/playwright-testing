@@ -17,44 +17,30 @@ pipeline {
             steps {
                 bat 'docker --version'
                 bat 'docker ps'
-                bat 'dir'
+                bat 'echo %WORKSPACE%'
             }
         }
 
         stage('Run Playwright in Docker') {
             steps {
-                script {
-                    docker.image('mcr.microsoft.com/playwright:latest').inside(
-                        '-u root --entrypoint=""'
-                    ) {
-
-                        sh '''
-                            echo "Inside container"
-                            pwd
-                            node -v
-                            npm -v
-
-                            npm ci
-
-                            npx playwright install --with-deps
-
-                            npx playwright test --reporter=junit,dot
-                        '''
-                    }
-                }
+                bat '''
+                docker run --rm ^
+                -v "%WORKSPACE%:/work" ^
+                -w /work ^
+                -e CI=true ^
+                mcr.microsoft.com/playwright:latest ^
+                /bin/bash -c "npm ci && npx playwright install --with-deps && npx playwright test --reporter=junit,dot"
+                '''
             }
         }
     }
 
     post {
         always {
-            junit allowEmptyResults: true,
-                   testResults: '**/*.xml'
+            junit allowEmptyResults: true, testResults: '**/*.xml'
 
-            archiveArtifacts(
-                artifacts: 'playwright-report/**',
-                allowEmptyArchive: true
-            )
+            archiveArtifacts artifacts: 'playwright-report/**',
+            allowEmptyArchive: true
         }
     }
 }

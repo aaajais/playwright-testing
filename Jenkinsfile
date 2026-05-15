@@ -23,7 +23,7 @@ pipeline {
                 -w /work ^
                 -e CI=true ^
                 -e PLAYWRIGHT_JUNIT_OUTPUT_NAME=results.xml ^
-                mcr.microsoft.com/playwright:latest ^
+                mcr.microsoft.com/playwright:v1.60.0-jammy ^
                 /bin/bash -c "npm install --no-package-lock && npx playwright test --reporter=dot,junit"
                 '''
             }

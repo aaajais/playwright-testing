@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-test.use({ headless: false });
+test.use({ headless: true });
 import { MyntraHome } from './pages/Myntra.page';
 import { GenzPage } from './pages/Genz.page';
 

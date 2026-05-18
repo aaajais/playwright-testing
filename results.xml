@@ -1,14 +1,6 @@
-<testsuites id="" name="" tests="16" failures="0" skipped="13" errors="1" time="12.714801000000001">
-<testsuite name="example.spec.js" timestamp="2026-05-18T18:19:47.474Z" hostname="" tests="1" failures="0" skipped="0" time="0.919" errors="0">
-<testcase name="Playwright homepage has Playwright in title" classname="example.spec.js" time="0.919">
-</testcase>
-</testsuite>
-<testsuite name="example.spec.ts" timestamp="2026-05-18T18:19:47.474Z" hostname="" tests="1" failures="0" skipped="0" time="0.954" errors="0">
-<testcase name="Playwright homepage has Playwright in title (POM)" classname="example.spec.ts" time="0.954">
-</testcase>
-</testsuite>
-<testsuite name="Genz.spec.ts" timestamp="2026-05-18T18:19:47.474Z" hostname="" tests="1" failures="0" skipped="0" time="6.724" errors="1">
-<testcase name="Click Gen Z link and verify navigation" classname="Genz.spec.ts" time="6.724">
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="1" time="11.459607">
+<testsuite name="Genz.spec.ts" timestamp="2026-05-18T18:33:34.774Z" hostname="" tests="1" failures="0" skipped="0" time="7.174" errors="1">
+<testcase name="Click Gen Z link and verify navigation" classname="Genz.spec.ts" time="7.174">
 <system-out>
 <![CDATA[Retrying in 2000ms...
 Retrying in 4000ms...
@@ -54,64 +46,6 @@ Call log:
     Error Context: ..\test-results\Genz-Click-Gen-Z-link-and-verify-navigation\error-context.md
 ]]>
 </error>
-</testcase>
-</testsuite>
-<testsuite name="Home.spec.ts" timestamp="2026-05-18T18:19:47.474Z" hostname="" tests="2" failures="0" skipped="2" time="0" errors="0">
-<testcase name="Login with invalid credentials on Myntra using POM" classname="Home.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Verify footer text on Myntra homepage using POM" classname="Home.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-</testsuite>
-<testsuite name="Login.spec.ts" timestamp="2026-05-18T18:19:47.474Z" hostname="" tests="2" failures="0" skipped="2" time="0" errors="0">
-<testcase name="Login with invalid credentials on Myntra using POM" classname="Login.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Login with valid credentials on Myntra using POM" classname="Login.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-</testsuite>
-<testsuite name="Myntra.spec.ts" timestamp="2026-05-18T18:19:47.474Z" hostname="" tests="9" failures="0" skipped="9" time="0" errors="0">
-<testcase name="Search Bag on Myntra using POM" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Click	 on Man	tab on Myntra" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="click on women tab on Myntra" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="click on kids tab on Myntra" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="Read data from Excel file" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="click on man t-shirts tab on Myntra" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="click on recommended tab and select low to high on Myntra" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="select lowest price product" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
-</testcase>
-<testcase name="add to product to bag" classname="Myntra.spec.ts">
-<skipped>
-</skipped>
 </testcase>
 </testsuite>
 </testsuites>

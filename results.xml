@@ -1,0 +1,90 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="1" time="128.142263">
+<testsuite name="Home.spec.ts" timestamp="2026-05-18T17:58:55.890Z" hostname="" tests="1" failures="0" skipped="0" time="125.059" errors="1">
+<testcase name="Verify footer text on Myntra homepage using POM" classname="Home.spec.ts" time="125.059">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\Home-Verify-footer-text-on-Myntra-homepage-using-POM\error-context.md]]
+]]>
+</system-out>
+<system-err>
+<![CDATA[Primary navigation failed, retrying with fallback: page.goto: Timeout 120000ms exceeded.
+Call log:
+[2m  - navigating to "https://www.myntra.com/", waiting until "domcontentloaded"[22m
+
+    at MyntraHome.goto [90m(C:\Users\Admin\Desktop\ABHISHEK JAISWAL\ABHISHEK JAISWAL\Project\Myntra(playwright testing)\[39mtests\pages\Myntra.page.ts:26:23[90m)[39m
+    at [90mC:\Users\Admin\Desktop\ABHISHEK JAISWAL\ABHISHEK JAISWAL\Project\Myntra(playwright testing)\[39mtests\Home.spec.ts:23:16 {
+  name: [32m'TimeoutError'[39m,
+  [[32mSymbol(step)[39m]: {
+    location: {
+      file: [32m'C:\\Users\\Admin\\Desktop\\ABHISHEK JAISWAL\\ABHISHEK JAISWAL\\Project\\Myntra(playwright testing)\\tests\\pages\\Myntra.page.ts'[39m,
+      line: [33m26[39m,
+      column: [33m23[39m,
+      function: [32m'MyntraHome.goto'[39m
+    },
+    category: [32m'pw:api'[39m,
+    title: [32m'Navigate to "/"'[39m,
+    apiName: [32m'page.goto'[39m,
+    params: {
+      url: [32m'https://www.myntra.com/'[39m,
+      waitUntil: [32m'domcontentloaded'[39m,
+      timeout: [33m120000[39m
+    },
+    group: [90mundefined[39m,
+    stepId: [32m'pw:api@39'[39m,
+    boxedStack: [90mundefined[39m,
+    steps: [],
+    attachmentIndices: [],
+    info: TestStepInfoImpl {
+      annotations: [],
+      _testInfo: [36m[TestInfoImpl][39m,
+      _stepId: [32m'pw:api@39'[39m,
+      _title: [32m'Navigate to "/"'[39m,
+      _parentStep: [90mundefined[39m,
+      skip: [36m[Function (anonymous)][39m
+    },
+    complete: [36m[Function: complete][39m,
+    endWallTime: [33m1779127257995[39m,
+    error: {
+      message: [32m'TimeoutError: page.goto: Timeout 120000ms exceeded.\n'[39m +
+        [32m'Call log:\n'[39m +
+        [32m'\x1B[2m  - navigating to "https://www.myntra.com/", waiting until "domcontentloaded"\x1B[22m\n'[39m,
+      stack: [32m'TimeoutError: page.goto: Timeout 120000ms exceeded.\n'[39m +
+        [32m'Call log:\n'[39m +
+        [32m'\x1B[2m  - navigating to "https://www.myntra.com/", waiting until "domcontentloaded"\x1B[22m\n'[39m +
+        [32m'\n'[39m +
+        [32m'    at MyntraHome.goto (C:\\Users\\Admin\\Desktop\\ABHISHEK JAISWAL\\ABHISHEK JAISWAL\\Project\\Myntra(playwright testing)\\tests\\pages\\Myntra.page.ts:26:23)\n'[39m +
+        [32m'    at C:\\Users\\Admin\\Desktop\\ABHISHEK JAISWAL\\ABHISHEK JAISWAL\\Project\\Myntra(playwright testing)\\tests\\Home.spec.ts:23:16'[39m,
+      cause: [90mundefined[39m
+    }
+  }
+}
+]]>
+</system-err>
+<error message="Test timeout of 120000ms exceeded." type="Error">
+<![CDATA[  Home.spec.ts:20:5 › Verify footer text on Myntra homepage using POM ──────────────────────────────
+
+    Test timeout of 120000ms exceeded.
+
+    Error: page.goto: net::ERR_ABORTED; maybe frame was detached?
+    Call log:
+      - navigating to "http://www.myntra.com/", waiting until "domcontentloaded"
+
+
+       at pages\Myntra.page.ts:32
+
+      30 |     } catch (error) {
+      31 |       console.warn('Primary navigation failed, retrying with fallback:', error);
+    > 32 |       await this.page.goto(this.url.replace('https://', 'http://'), {
+         |                       ^
+      33 |         waitUntil: 'domcontentloaded',
+      34 |         timeout: 120000
+      35 |       });
+        at MyntraHome.goto (C:\Users\Admin\Desktop\ABHISHEK JAISWAL\ABHISHEK JAISWAL\Project\Myntra(playwright testing)\tests\pages\Myntra.page.ts:32:23)
+        at C:\Users\Admin\Desktop\ABHISHEK JAISWAL\ABHISHEK JAISWAL\Project\Myntra(playwright testing)\tests\Home.spec.ts:23:5
+
+    Error Context: ..\test-results\Home-Verify-footer-text-on-Myntra-homepage-using-POM\error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+</testsuites>

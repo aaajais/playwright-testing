@@ -19,18 +19,22 @@ import { PlaywrightTestConfig } from '@playwright/test';
 const config: PlaywrightTestConfig = {
   testDir: 'tests',
 
-  timeout: 60000,
+  timeout: 90000,
+  expect: {
+    timeout: 10000,
+  },
 
   use: {
     headless: true,
-
+    actionTimeout: 30000,
     ignoreHTTPSErrors: true,
+    bypassCSP: true,
 
     launchOptions: {
       args: [
-        '--disable-http2',
         '--disable-dev-shm-usage',
-        '--no-sandbox'
+        '--no-sandbox',
+        '--disable-gpu'
       ]
     }
   },

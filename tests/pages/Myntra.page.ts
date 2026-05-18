@@ -22,12 +22,29 @@ export class MyntraHome {
   //   }
   // }
   async goto() {
-    await this.page.goto(this.url, {
-      waitUntil: 'commit',
-      timeout: 60000
-    });
+    const maxRetries = 3;
+    let lastError: Error | null = null;
 
-    await this.page.waitForTimeout(5000);
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        await this.page.goto(this.url, {
+          waitUntil: 'load',
+          timeout: 90000
+        });
+        return;
+      } catch (error) {
+        lastError = error as Error;
+        console.warn(`Navigation attempt ${attempt}/${maxRetries} failed:`, lastError.message);
+        
+        if (attempt < maxRetries) {
+          const delay = Math.pow(2, attempt - 1) * 2000;
+          console.log(`Retrying in ${delay}ms...`);
+          await this.page.waitForTimeout(delay);
+        }
+      }
+    }
+
+    throw new Error(`Failed to navigate after ${maxRetries} attempts: ${lastError?.message}`);
   }
   // Search for a product
   async search(query: string) {

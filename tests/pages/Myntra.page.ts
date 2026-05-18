@@ -8,18 +8,26 @@ export class MyntraHome {
     this.page = page;
   }
   // Navigate to Myntra homepage
+  // async goto() {
+  //   try {
+  //     await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  //   } catch (e) {
+  //     // fallback: try with http or longer wait
+  //     try {
+  //       await this.page.goto(this.url.replace('https://', 'http://'), { waitUntil: 'domcontentloaded', timeout: 60000 });
+  //     } catch (err) {
+  //       // rethrow original error for visibility
+  //       throw e;
+  //     }
+  //   }
+  // }
   async goto() {
-    try {
-      await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    } catch (e) {
-      // fallback: try with http or longer wait
-      try {
-        await this.page.goto(this.url.replace('https://', 'http://'), { waitUntil: 'domcontentloaded', timeout: 60000 });
-      } catch (err) {
-        // rethrow original error for visibility
-        throw e;
-      }
-    }
+    await this.page.goto(this.url, {
+      waitUntil: 'commit',
+      timeout: 60000
+    });
+
+    await this.page.waitForTimeout(5000);
   }
   // Search for a product
   async search(query: string) {
@@ -201,10 +209,10 @@ export class MyntraHome {
     }
   }
 
-  
 
-  
-  
+
+
+
 
 
 

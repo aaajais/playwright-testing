@@ -22,29 +22,36 @@ export class MyntraHome {
   //   }
   // }
   async goto() {
-    const maxRetries = 3;
+    const fallbackConfigs = [
+      { url: this.url.replace('https://', 'http://'), waitUntil: 'load' as const },
+      { url: this.url.replace('https://', 'http://'), waitUntil: 'domcontentloaded' as const },
+      { url: this.url, waitUntil: 'load' as const },
+      { url: this.url, waitUntil: 'domcontentloaded' as const }
+    ];
+
     let lastError: Error | null = null;
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    for (const [index, config] of fallbackConfigs.entries()) {
       try {
-        await this.page.goto(this.url, {
-          waitUntil: 'load',
-          timeout: 90000
+        console.log(`Navigating to ${config.url} with waitUntil=${config.waitUntil} (attempt ${index + 1}/${fallbackConfigs.length})`);
+        await this.page.goto(config.url, {
+          waitUntil: config.waitUntil,
+          timeout: 120000
         });
         return;
       } catch (error) {
         lastError = error as Error;
-        console.warn(`Navigation attempt ${attempt}/${maxRetries} failed:`, lastError.message);
+        console.warn(`Navigation attempt ${index + 1} failed:`, lastError.message);
         
-        if (attempt < maxRetries) {
-          const delay = Math.pow(2, attempt - 1) * 2000;
+        if (index < fallbackConfigs.length - 1) {
+          const delay = (index + 1) * 2000;
           console.log(`Retrying in ${delay}ms...`);
-          await this.page.waitForTimeout(delay);
+          await new Promise(resolve => setTimeout(resolve, delay));
         }
       }
     }
 
-    throw new Error(`Failed to navigate after ${maxRetries} attempts: ${lastError?.message}`);
+    throw new Error(`Failed to navigate after ${fallbackConfigs.length} attempts: ${lastError?.message}`);
   }
   // Search for a product
   async search(query: string) {
@@ -224,6 +231,9 @@ export class MyntraHome {
         throw new Error(`Footer is missing expected text: "${part}"`);
       }
     }
+
+
+    
   }
 
 

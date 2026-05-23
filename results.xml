@@ -1,51 +1,6 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="1" time="11.459607">
-<testsuite name="Genz.spec.ts" timestamp="2026-05-18T18:33:34.774Z" hostname="" tests="1" failures="0" skipped="0" time="7.174" errors="1">
-<testcase name="Click Gen Z link and verify navigation" classname="Genz.spec.ts" time="7.174">
-<system-out>
-<![CDATA[Retrying in 2000ms...
-Retrying in 4000ms...
-
-[[ATTACHMENT|test-results\Genz-Click-Gen-Z-link-and-verify-navigation\error-context.md]]
-]]>
-</system-out>
-<system-err>
-<![CDATA[Navigation attempt 1/3 failed: page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.myntra.com/
-Call log:
-[2m  - navigating to "https://www.myntra.com/", waiting until "load"[22m
-
-Navigation attempt 2/3 failed: page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.myntra.com/
-Call log:
-[2m  - navigating to "https://www.myntra.com/", waiting until "load"[22m
-
-Navigation attempt 3/3 failed: page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.myntra.com/
-Call log:
-[2m  - navigating to "https://www.myntra.com/", waiting until "load"[22m
-
-]]>
-</system-err>
-<error message="Failed to navigate after 3 attempts: page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.myntra.com/" type="Error">
-<![CDATA[  Genz.spec.ts:7:5 › Click Gen Z link and verify navigation ────────────────────────────────────────
-
-    Error: Failed to navigate after 3 attempts: page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.myntra.com/
-    Call log:
-      - navigating to "https://www.myntra.com/", waiting until "load"
-
-
-       at pages\Myntra.page.ts:47
-
-      45 |     }
-      46 |
-    > 47 |     throw new Error(`Failed to navigate after ${maxRetries} attempts: ${lastError?.message}`);
-         |           ^
-      48 |   }
-      49 |   // Search for a product
-      50 |   async search(query: string) {
-        at MyntraHome.goto (C:\Users\Admin\Desktop\ABHISHEK JAISWAL\ABHISHEK JAISWAL\Project\Myntra(playwright testing)\tests\pages\Myntra.page.ts:47:11)
-        at C:\Users\Admin\Desktop\ABHISHEK JAISWAL\ABHISHEK JAISWAL\Project\Myntra(playwright testing)\tests\Genz.spec.ts:12:2
-
-    Error Context: ..\test-results\Genz-Click-Gen-Z-link-and-verify-navigation\error-context.md
-]]>
-</error>
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="11.34064300000001">
+<testsuite name="test.spec.ts" timestamp="2026-05-23T10:20:01.202Z" hostname="" tests="1" failures="0" skipped="0" time="8.903" errors="0">
+<testcase name="open application" classname="test.spec.ts" time="8.903">
 </testcase>
 </testsuite>
 </testsuites>

@@ -32,6 +32,7 @@ const config: PlaywrightTestConfig = {
 
     launchOptions: {
       args: [
+        '--disable-http2',
         '--disable-dev-shm-usage',
         '--no-sandbox',
         '--disable-gpu'

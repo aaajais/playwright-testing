@@ -49,8 +49,17 @@ test('fill from', async ({ page }) => {
     await page.locator('#city').click();
     await page.locator('#react-select-4-input').type('Delhi');
     await page.locator('#react-select-4-input').press('Enter');
+})
 
-
+//open element//
+test('open element',async({page})=>{
+    await page.goto('https://demoqa.com/');
+    // Verify Elements is visible
+    await expect(
+        page.getByText('Elements')
+    ).toBeVisible();
+    // Click Elements
+    await page.getByText('Elements').click();
 })
 
 

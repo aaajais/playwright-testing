@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="10.996283999994397">
+<testsuite name="test.spec.ts" timestamp="2026-05-24T06:41:18.686Z" hostname="" tests="1" failures="0" skipped="0" time="7.591" errors="0">
+<testcase name="open element" classname="test.spec.ts" time="7.591">
+</testcase>
+</testsuite>
+</testsuites>

@@ -9,18 +9,13 @@ export class MyntraHome {
     }
     // Navigate to Myntra homepage
     async goto() {
-        try {
-            await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-        } catch (e) {
-            // fallback: try with http or longer wait
-            try {
-                await this.page.goto(this.url.replace('https://', 'http://'), { waitUntil: 'domcontentloaded', timeout: 30000 });
-            } catch (err) {
-                // rethrow original error for visibility
-                throw e;
-            }
-        }
-    }
+    await this.page.goto(this.url, {
+        waitUntil: 'load',
+        timeout: 60000
+    });
+
+    await this.page.waitForLoadState('networkidle');
+}
 
     ///Click on man tab from home page
     async getAllMenItems() {

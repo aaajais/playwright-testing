@@ -8,17 +8,12 @@ export class LoginPage {
     }
     //Navigate to the Login Page
     async goto() {
-        try {
-            await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-        } catch (e) {
-            //fallback: try with http or longer wait
-            try {
-                await this.page.goto(this.url.replace('https://', 'http://'), { waitUntil: 'domcontentloaded', timeout: 30000 });
-            } catch (err) {
-                //rethrow original error for visibility
-                throw e;
-            }
-        }
+        await this.page.goto(this.url, {
+            waitUntil: 'commit',
+            timeout: 60000
+        });
+
+        await this.page.waitForTimeout(5000);
     }
     //Login with invalid credentials
     async loginWithInvalidCredentials(email: string, password: string) {

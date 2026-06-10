@@ -13,8 +13,13 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@hover-dev/cli": "^0.14.1",
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.10.1",
+    "@types/xlsx": "^0.0.35",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
   }
 }

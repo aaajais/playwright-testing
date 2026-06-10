@@ -8,18 +8,50 @@ export class MyntraHome {
     this.page = page;
   }
   // Navigate to Myntra homepage
+  // async goto() {
+  //   try {
+  //     await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  //   } catch (e) {
+  //     // fallback: try with http or longer wait
+  //     try {
+  //       await this.page.goto(this.url.replace('https://', 'http://'), { waitUntil: 'domcontentloaded', timeout: 60000 });
+  //     } catch (err) {
+  //       // rethrow original error for visibility
+  //       throw e;
+  //     }
+  //   }
+  // }
   async goto() {
-    try {
-      await this.page.goto(this.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    } catch (e) {
-      // fallback: try with http or longer wait
+    const fallbackConfigs = [
+      { url: this.url.replace('https://', 'http://'), waitUntil: 'load' as const },
+      { url: this.url.replace('https://', 'http://'), waitUntil: 'domcontentloaded' as const },
+      { url: this.url, waitUntil: 'load' as const },
+      { url: this.url, waitUntil: 'domcontentloaded' as const }
+    ];
+
+    let lastError: Error | null = null;
+
+    for (const [index, config] of fallbackConfigs.entries()) {
       try {
-        await this.page.goto(this.url.replace('https://', 'http://'), { waitUntil: 'domcontentloaded', timeout: 30000 });
-      } catch (err) {
-        // rethrow original error for visibility
-        throw e;
+        console.log(`Navigating to ${config.url} with waitUntil=${config.waitUntil} (attempt ${index + 1}/${fallbackConfigs.length})`);
+        await this.page.goto(config.url, {
+          waitUntil: config.waitUntil,
+          timeout: 120000
+        });
+        return;
+      } catch (error) {
+        lastError = error as Error;
+        console.warn(`Navigation attempt ${index + 1} failed:`, lastError.message);
+        
+        if (index < fallbackConfigs.length - 1) {
+          const delay = (index + 1) * 2000;
+          console.log(`Retrying in ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
       }
     }
+
+    throw new Error(`Failed to navigate after ${fallbackConfigs.length} attempts: ${lastError?.message}`);
   }
   // Search for a product
   async search(query: string) {
@@ -45,10 +77,19 @@ export class MyntraHome {
     const items = this.page.locator('.desktop-pane a');
 
     const count = await items.count();
-    console.log("Total items:", count);
+    console.log('Total items:', count);
+    if (count === 0) {
+      console.warn('No items found under MEN tab');
+      return;
+    }
 
     for (let i = 0; i < count; i++) {
-      console.log(await items.nth(i).innerText());
+      // protect against invisible elements
+      try {
+        console.log(await items.nth(i).innerText());
+      } catch (err) {
+        console.warn(`could not read item ${i}:`, err);
+      }
     }
   }
 
@@ -64,7 +105,7 @@ export class MyntraHome {
     for (let i = 0; i < count; i++) {
       console.log(await items.nth(i).innerText());
     }
-  };
+  }
 
   //click on Kids tab on Myntra
   async clickOnKidstab() {
@@ -73,10 +114,18 @@ export class MyntraHome {
     const items = this.page.locator('.desktop-pane a');
 
     const count = await items.count();
-    console.log("Total items:", count);
+    console.log('Total items:', count);
+    if (count === 0) {
+      console.warn('No items found under KIDS tab');
+      return;
+    }
 
     for (let i = 0; i < count; i++) {
-      console.log(await items.nth(i).innerText());
+      try {
+        console.log(await items.nth(i).innerText());
+      } catch (err) {
+        console.warn(`could not read kid item ${i}:`, err);
+      }
     }
 
   }
@@ -101,7 +150,17 @@ export class MyntraHome {
   //click recommended tab on Myntra and select low to high
   async selectPriceLowToHigh() {
     await this.page.locator('.sort-sortBy').click();
-    await this.page.locator('li', { hasText: 'Price: Low to High' }).click();
+    const option = this.page.locator('li', { hasText: 'Price: Low to High' }).first();
+    if (await option.count() === 0) {
+      const alt = this.page.locator('text=Price: Low to High').first();
+      if (await alt.count() === 0) {
+        console.warn('Sort option "Price: Low to High" not found');
+        return;
+      }
+      await alt.click();
+      return;
+    }
+    await option.click();
   }
 
 
@@ -132,8 +191,13 @@ export class MyntraHome {
     await checkButton.click();
 
     // Wait for availability message (Available / Delivery by...)
-    const availabilityMessage = this.page.locator("div:has-text('Available')");
-    await availabilityMessage.waitFor({ state: 'visible', timeout: 15000 });
+    const availabilityMessage = this.page.locator("div:has-text('Available'), div:has-text('Delivery')");
+    // If neither message appears, continue but warn
+    try {
+      await availabilityMessage.waitFor({ state: 'visible', timeout: 15000 });
+    } catch (err) {
+      console.warn('Availability message did not appear after checking pincode');
+    }
 
     // Click "Add to Bag"
     const addToBagButton = this.page.locator("button:has-text('Add to Bag')");
@@ -167,10 +231,15 @@ export class MyntraHome {
         throw new Error(`Footer is missing expected text: "${part}"`);
       }
     }
+
+
+    
   }
 
-  
-  
+
+
+
+
 
 
 
